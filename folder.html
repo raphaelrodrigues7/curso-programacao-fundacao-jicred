@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!doctype html>
+    <html lang="pt-BR">
+      <head>
+        <meta charset="UTF-8" />
+        <title>Meu Site</title>
+        <style>
+          body {
+            background-color: #a099ff; /* Altera a cor usando hexadecimal */
+          }
+        </style>
+        <h1>chat-curious!</h1>
+        <strong
+          ><h2>encontre projetos pela internet sobre programação</h2></strong
+        >
+        <title>Folder</title>
+        <form action="processa.php" method="post">
+          <label>Nome:</label>
+          <input type="text" name="nome" required />
+          <br /><br />
+
+          <label>Email:</label>
+          <input type="email" name="email" required />
+          <br /><br />
+          <label>Senha :</label>
+          <input type="password" name="senha" required />
+          <br /><br />
+
+          <label>Data de Nascimento:</label>
+          <input type="date" name="nascimento" required />
+          <br /><br />
+
+          <label>Escolha seu gênero:</label><br />
+
+          <input type="radio" id="masculino" name="genero" value="masculino" />
+          <label for="masculino">Masculino</label>
+
+          <input type="radio" id="feminino" name="genero" value="feminino" />
+          <label for="feminino">Feminino</label>
+
+          <br /><br />
+          <button type="submit">Enviar</button>
+
+          <form action="/enviar" method="post">
+            <h3>Escolha seus hobbies:</h3>
+
+            <label>
+              <input type="checkbox" name="hobbies" value="leitura" />
+              Leitura </label
+            ><br /><br />
+
+            <label>
+              <input type="checkbox" name="hobbies" value="esportes" />
+              Esportes </label
+            ><br /><br />
+
+            <label>
+              <input type="checkbox" name="hobbies" value="musica" />
+              Música </label
+            ><br />
+            <br />
+
+            <label>
+              <input type="checkbox" name="hobbies" value="viagem" />
+              Viagem </label
+            ><br /><br />
+            <required />
+
+            <label>
+              <input type="checkbox" name="hobbies" value="cozinha" />
+              Cozinhar </label
+            ><br /><br />
+          </form>
+          <input type="submit" value="Enviar" required />
+          <form>
+            <br /><br />
+            <label for="curso">Escolha um curso:</label>
+            <select id="curso" name="curso">
+              <option value="html">HTML</option>
+              <option value="css">CSS</option>
+              <option value="javascript">JavaScript</option>
+            </select>
+          </form>
+          <form action="#" method="post">
+            <label for="mensagem">Mensagem:</label><br />
+            <textarea
+              id="mensagem"
+              name="mensagem"
+              rows="4"
+              cols="50"
+            ></textarea>
+            <br /><br />
+            <button type="submit">Enviar</button>
+            <br /><br />
+            <form action="/upload" method="post" enctype="multipart/form-data">
+              <label for="foto">Escolha sua foto de perfil:</label>
+              <input
+                type="file"
+                id="foto"
+                name="foto"
+                accept="image/*"
+                required
+              />
+              <button type="submit">Enviar foto</button>
+              <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Pesquisa</title>
+</head>
+<body>
+
+    <form>
+        <!-- Pergunta de matemática -->
+        <label for="calculo">1. Quanto é 98 + 98 de 205?</label><br>
+        <input type="text" id="calculo" name="calculo" placeholder="Digite sua resposta">
+        
+        <br><br>
+
+        <!-- Pergunta de múltipla escolha com radio buttons -->
+        <label>2. Qual linguagem deseja aprender?</label><br>
+        
+        <input type="radio" id="html" name="linguagem" value="html">
+        <label for="html">HTML</label><br>
+
+        <input type="radio" id="css" name="linguagem" value="css">
+        <label for="css">CSS</label><br>
+
+        <input type="radio" id="javascript" name="linguagem" value="javascript">
+        <label for="javascript">JavaScript</label>
+
+        <br><br>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+</body>
+            </form>
+          </form>
+        </form>
+      </head>
+    </html>
+  </head>
+</html>
