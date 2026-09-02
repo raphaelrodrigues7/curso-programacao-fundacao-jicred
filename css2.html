@@ -6,6 +6,7 @@
     <title>Page Title</title>
     <link rel="stylesheet" href="main.css" />
   </head>
+
   <body>
     <!doctype html>
     <html lang="pt-BR">
@@ -83,9 +84,11 @@
           .texto-destaque {
             color: red;
           }
+
           .texto-grande {
             text-align: center;
           }
+
           .caixa-azul {
             width: 1000px;
             padding: 20px;
@@ -93,6 +96,7 @@
             margin: 10px;
             background-color: #90b5fa;
           }
+
           .caixa-amarela {
             width: 1000px;
             padding: 20px;
@@ -100,28 +104,92 @@
             margin: 10px;
             background-color: hsl(49, 100%, 50%);
           }
+
+          .flex-linha {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: row;
+          }
+
+          .flex-coluna {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: column;
+          }
+
           .item-vermelho {
             background-color: hsl(0, 100%, 42%);
-            height: 100px;
             text-align: center;
             font-size: 20px;
-            width: 50;
+            width: 50px;
             padding: 10px;
             border-radius: 10px;
           }
 
           .item-verde {
             background-color: hsl(123, 100%, 42%);
-            height: 100px;
             text-align: center;
-            line-height: 100px;
-            font-weight: bold;
-            width: 50;
+            font-size: 20px;
+            width: 50px;
+            border-radius: 10px;
+            padding: 10px;
           }
+
           .item-azul {
+            background-color: hwb(207 0% 16%);
+            text-align: center;
+            font-size: 20px;
+            border-radius: 10px;
+            padding: 10px;
+            width: 50px;
+          }
+
+          .grade {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+          }
+
+          .item-grade {
+            background: hwb(345 55% 7%);
+            border-radius: 8px;
+            text-align: center;
+            font-size: medium;
+            width: 350px;
+          }
+          .bloco-visivel {
+            width: 450px;
+            padding: 20px;
+            border: 2px solid hsl(118, 100%, 38%);
+            margin: 10px;
+            background-color: lch(100% 0.01 296.81);
+          }
+          .barra-fixixa {
+            width: 250px;
+            padding: 20px;
+            border: 2px solid lab(53.19% 92.06 -72.71);
+            margin: 10px;
+            background-color: lch(100% 0.01 296.81);
+          }
+          .barra-porcentagem {
+            width: 100;
+            padding: 20px;
+            border: 2px solid hwb(0 0% 46%);
+            margin: 10px;
+            background-color: oklch(75.212% 0.15443 135.518);
+          }
+          .barra-meia {
+            width: 50;
+            padding: 20px;
+            border: 2px solid hwb(64 0% 0%);
+            margin: 10px;
+            background-color: lch(100% 0.01 296.81);
           }
         </style>
       </head>
+
       <body>
         <header class="topo">
           <h1 class="titulo-pagina">Colinha de CSS</h1>
