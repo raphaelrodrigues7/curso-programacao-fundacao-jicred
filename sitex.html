@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
-    SITE ESQUELETO
-
     <!doctype html>
     <html lang="pt-BR">
       <head>
@@ -165,38 +163,102 @@
             gap: 20px;
           }
 
+          .filtros {
+            padding: 10px;
+          }
+
           .card {
-            background: lch(100% 0.01 296.81);
-            border-radius: 10px;
+            background: oklab(95.815% 0 -0.00011);
+            border-radius: 20px;
             width: 250px;
             padding: 20px;
             display: flex;
             flex-direction: column;
-            border: solid grey;
+            border: solid #cfcfcf;
             gap: 10px;
           }
           .card-tag {
             color: hsl(142, 100%, 50%);
           }
           .card-nome {
-            color: hwb(0 33% 67%);
+            color: lab(20.49% -9.16 4.2);
+            margin: 0px;
+            font-family:
+              system-ui,
+              -apple-system,
+              BlinkMacSystemFont,
+              "Segoe UI",
+              Roboto,
+              Oxygen,
+              Ubuntu,
+              Cantarell,
+              "Open Sans",
+              "Helvetica Neue",
+              sans-serif;
           }
           .card-descricao {
-            color: hwb(0 79% 21%);
+            color: lab(45.64% -50.1 49.25);
+            font-size: small;
+            font-family:
+              system-ui,
+              -apple-system,
+              BlinkMacSystemFont,
+              "Segoe UI",
+              Roboto,
+              Oxygen,
+              Ubuntu,
+              Cantarell,
+              "Open Sans",
+              "Helvetica Neue",
+              sans-serif;
           }
           .card-preço {
             color: hsl(142, 98%, 50%);
+            font-weight: 200;
+            font-family:
+              system-ui,
+              -apple-system,
+              BlinkMacSystemFont,
+              "Segoe UI",
+              Roboto,
+              Oxygen,
+              Ubuntu,
+              Cantarell,
+              "Open Sans",
+              "Helvetica Neue",
+              sans-serif;
           }
 
           .conteudo {
             padding: 20px;
           }
           .card-botao {
-            color: #1f2937;
-            border-radius: 50px;
+            display: display-flex;
+            flex-direction: row;
+            justify-content: space-between;
+            background-color: #1f2937;
+          }
+          .card-botao {
+            color: hsl(0, 0%, 100%);
+            border-radius: 5px;
+            width: 80;
+            height: 5;
           }
           .card-preco {
             color: hsl(142, 100%, 50%);
+            font-size: larger;
+            font-family:
+              system-ui,
+              -apple-system,
+              BlinkMacSystemFont,
+              "Segoe UI",
+              Roboto,
+              Oxygen,
+              Ubuntu,
+              Cantarell,
+              "Open Sans",
+              "Helvetica Neue",
+              sans-serif;
           }
           .filtro-botao {
             border-radius: 20px;
@@ -204,6 +266,88 @@
             width: 100px;
             height: 40px;
             border: 10px hsl(133, 100%, 50%);
+            padding: 10px;
+          }
+          .titulo-secao {
+            color: hwb(111 16% 78%);
+            font-family:
+              system-ui,
+              -apple-system,
+              BlinkMacSystemFont,
+              "Segoe UI",
+              Roboto,
+              Oxygen,
+              Ubuntu,
+              Cantarell,
+              "Open Sans",
+              "Helvetica Neue",
+              sans-serif;
+          }
+          .subtitulo-secao {
+            color: hwb(111, 16%, 78%);
+          }
+          .marca-nome {
+            font-family:
+              system-ui,
+              -apple-system,
+              BlinkMacSystemFont,
+              "Segoe UI",
+              Roboto,
+              Oxygen,
+              Ubuntu,
+              Cantarell,
+              "Open Sans",
+              "Helvetica Neue",
+              sans-serif;
+            color: hsl(140, 18%, 13%);
+          }
+          .marca-icone {
+            font-family:
+              system-ui,
+              -apple-system,
+              BlinkMacSystemFont,
+              "Segoe UI",
+              Roboto,
+              Oxygen,
+              Ubuntu,
+              Cantarell,
+              "Open Sans",
+              "Helvetica Neue",
+              sans-serif;
+          }
+          .filtro-botao {
+            color: hwb(144 17% 81%);
+            font-family:
+              system-ui,
+              -apple-system,
+              BlinkMacSystemFont,
+              "Segoe UI",
+              Roboto,
+              Oxygen,
+              Ubuntu,
+              Cantarell,
+              "Open Sans",
+              "Helvetica Neue",
+              sans-serif;
+          }
+          .rodape {
+            font-family:
+              system-ui,
+              -apple-system,
+              BlinkMacSystemFont,
+              "Segoe UI",
+              Roboto,
+              Oxygen,
+              Ubuntu,
+              Cantarell,
+              "Open Sans",
+              "Helvetica Neue",
+              sans-serif;
+          }
+          .card-rodape {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
           }
         </style>
       </head>
@@ -244,7 +388,7 @@
 
           <div class="perfil perfil-desktop">
             <div class="perfil-dados">
-              <span class="perfil-nome">Ana Souza</span>
+              <span class="perfil-nome">Ana_Souza</span>
               <span class="perfil-cargo">Cliente</span>
             </div>
             <img
@@ -300,7 +444,9 @@
                 Som limpo e bateria de longa duração.
               </p>
               <div class="card-rodape">
-                <span class="card-preco">R$ 199</span>
+                <strong>
+                  <span class="card-preco">R$ 199</span>
+                </strong>
                 <button class="card-botao">Comprar</button>
               </div>
             </article>
@@ -322,7 +468,9 @@
                 Monitore passos, sono e notificações.
               </p>
               <div class="card-rodape">
-                <span class="card-preco">R$ 349</span>
+                <strong>
+                  <span class="card-preco">R$ 349</span>
+                </strong>
                 <button class="card-botao">Comprar</button>
               </div>
             </article>
@@ -342,7 +490,9 @@
               <h2 class="card-nome">Luminária de Mesa</h2>
               <p class="card-descricao">Luz suave para estudar e trabalhar.</p>
               <div class="card-rodape">
-                <span class="card-preco">R$ 89</span>
+                <strong>
+                  <span class="card-preco">R$ 89</span>
+                </strong>
                 <button class="card-botao">Comprar</button>
               </div>
             </article>
@@ -358,7 +508,9 @@
               <h2 class="card-nome">Cafeteira</h2>
               <p class="card-descricao">Café pronto em poucos minutos.</p>
               <div class="card-rodape">
-                <span class="card-preco">R$ 259</span>
+                <strong>
+                  <span class="card-preco">R$ 259</span>
+                </strong>
                 <button class="card-botao">Comprar</button>
               </div>
             </article>
@@ -380,7 +532,9 @@
                 Leve, confortável e com boa aderência.
               </p>
               <div class="card-rodape">
-                <span class="card-preco">R$ 429</span>
+                <strong>
+                  <span class="card-preco">R$ 429</span>
+                </strong>
                 <button class="card-botao">Comprar</button>
               </div>
             </article>
@@ -400,7 +554,9 @@
               <h2 class="card-nome">Garrafa Térmica</h2>
               <p class="card-descricao">Mantém a temperatura por 12 horas.</p>
               <div class="card-rodape">
-                <span class="card-preco">R$ 79</span>
+                <strong>
+                  <span class="card-preco">R$ 79</span>
+                </strong>
                 <button class="card-botao">Comprar</button>
               </div>
             </article>
@@ -420,7 +576,9 @@
               <h2 class="card-nome">Mochila Casual</h2>
               <p class="card-descricao">Espaço para notebook e materiais.</p>
               <div class="card-rodape">
-                <span class="card-preco">R$ 149</span>
+                <strong>
+                  <span class="card-preco">R$ 149</span>
+                </strong>
                 <button class="card-botao">Comprar</button>
               </div>
             </article>
@@ -440,7 +598,9 @@
               <h2 class="card-nome">Óculos de Sol</h2>
               <p class="card-descricao">Proteção UV com estilo moderno.</p>
               <div class="card-rodape">
-                <span class="card-preco">R$ 119</span>
+                <strong>
+                  <span class="card-preco">R$ 119</span>
+                </strong>
                 <button class="card-botao">Comprar</button>
               </div>
             </article>
