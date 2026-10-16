@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS GAME STORE | Sua Loja Virtual Gamer</title>
+    
+    <!-- Fonts Google: Rajdhani e Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        nexus: {
+                            black: '#0a0a0e',
+                            dark: '#12121a',
+                            card: '#1a1a26',
+                            border: '#2a2a3c',
+                            red: '#ff0055',
+                            redHover: '#e6004c',
+                            redGlow: 'rgba(255, 0, 85, 0.4)',
+                            textLight: '#f3f4f6',
+                            textMuted: '#9ca3af'
+                        }
+                    },
+                    fontFamily: {
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'neon': '0 0 15px rgba(255, 0, 85, 0.4), 0 0 30px rgba(255, 0, 85, 0.1)',
+                        'neon-lg': '0 0 25px rgba(255, 0, 85, 0.6), 0 0 50px rgba(255, 0, 85, 0.2)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0e;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6, .font-gamer {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.05em;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2a3c;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff0055;
+        }
+
+        /* Red Neon Glow Effects */
+        .neon-border {
+            border: 1px solid rgba(255, 0, 85, 0.3);
+            transition: all 0.3s ease;
+        }
+        .neon-border:hover {
+            border-color: #ff0055;
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.4);
+        }
+
+        .clip-diagonal {
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+        }
+
+        /* Custom Modal Overlay Blur */
+        .backdrop-blur-custom {
+            backdrop-filter: blur(8px);
+        }
+
+        /* Banner Gradient */
+        .hero-overlay {
+            background: linear-gradient(180deg, rgba(10,10,14,0.2) 0%, rgba(10,10,14,0.85) 75%, rgba(10,10,14,1) 100%),
+                        linear-gradient(90deg, rgba(10,10,14,0.9) 0%, rgba(10,10,14,0.4) 50%, rgba(10,10,14,0.8) 100%);
+        }
+    </style>
+</head>
+<body class="bg-nexus-black text-nexus-textLight flex flex-col min-h-screen">
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 bg-nexus-dark/90 backdrop-blur-md border-b border-nexus-border transition-all duration-300" id="main-header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 bg-nexus-red rounded-lg flex items-center justify-center transform group-hover:rotate-6 transition-transform shadow-neon">
+                        <i class="fa-solid fa-gamepad text-xl text-white"></i>
+                    </div>
+                    <span class="text-2xl font-bold font-gamer tracking-wider text-white">
+                        NEXUS<span class="text-nexus-red">.STORE</span>
+                    </span>
+                </a>
+
+                <!-- Search Bar -->
+                <div class="hidden md:flex items-center flex-1 max-w-md mx-8 relative">
+                    <input type="text" id="search-input" placeholder="Buscar jogos, franquias, DLCs..." 
+                           class="w-full bg-nexus-black border border-nexus-border rounded-full py-2 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-nexus-red focus:ring-1 focus:ring-nexus-red transition-all">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 text-nexus-textMuted text-sm"></i>
+                </div>
+
+                <!-- Nav Actions -->
+                <div class="flex items-center gap-4">
+                    <!-- Wishlist Counter -->
+                    <button id="btn-wishlist-toggle" class="relative p-2 text-nexus-textMuted hover:text-nexus-red transition-colors" title="Favoritos">
+                        <i class="fa-solid fa-heart text-xl"></i>
+                        <span id="wishlist-badge" class="absolute -top-1 -right-1 bg-nexus-red text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
+                    </button>
+
+                    <!-- Cart Trigger -->
+                    <button id="btn-cart-toggle" class="relative flex items-center gap-2 bg-nexus-card border border-nexus-border hover:border-nexus-red px-4 py-2 rounded-lg text-white font-medium text-sm transition-all hover:shadow-neon">
+                        <i class="fa-solid fa-cart-shopping text-nexus-red"></i>
+                        <span class="hidden sm:inline">Carrinho</span>
+                        <span id="cart-badge" class="bg-nexus-red text-white text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+                    </button>
+
+                    <!-- User Account -->
+                    <button class="flex items-center gap-2 bg-nexus-red hover:bg-nexus-redHover text-white px-4 py-2 rounded-lg font-bold text-sm tracking-wide transition-all shadow-neon">
+                        <i class="fa-solid fa-user"></i>
+                        <span class="hidden sm:inline font-gamer text-base">ENTRAR</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Search Bar -->
+            <div class="pb-3 md:hidden">
+                <div class="relative w-full">
+                    <input type="text" id="mobile-search-input" placeholder="Buscar jogos..." 
+                           class="w-full bg-nexus-black border border-nexus-border rounded-full py-2 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-nexus-red">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-nexus-textMuted text-sm"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow">
+
+        <!-- HERO BANNER SECTION -->
+        <section class="relative min-h-[500px] lg:min-h-[600px] flex items-center overflow-hidden border-b border-nexus-border">
+            <!-- Background Image with Overlay -->
+            <div class="absolute inset-0 z-0">
+                <img id="hero-bg" src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1600&q=80" alt="Jogo Destaque" class="w-full h-full object-cover object-center transform scale-105 transition-all duration-700">
+                <div class="absolute inset-0 hero-overlay"></div>
+            </div>
+
+            <!-- Content -->
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+                <div class="max-w-2xl">
+                    <!-- Badge -->
+                    <div class="inline-flex items-center gap-2 bg-nexus-red/20 border border-nexus-red px-3 py-1 rounded-full text-nexus-red text-xs font-bold uppercase tracking-wider mb-4 shadow-neon">
+                        <span class="w-2 h-2 rounded-full bg-nexus-red animate-pulse"></span>
+                        LANÇAMENTO MUNDIAL
+                    </div>
+                    
+                    <h1 id="hero-title" class="text-4xl sm:text-6xl font-bold font-gamer tracking-wider text-white uppercase mb-3 leading-none drop-shadow-md">
+                        CYBER PROTOCOL 2088
+                    </h1>
+
+                    <!-- Tags / Metas -->
+                    <div class="flex flex-wrap items-center gap-4 text-sm text-nexus-textMuted mb-4">
+                        <span class="text-yellow-400 font-bold flex items-center gap-1">
+                            <i class="fa-solid fa-star"></i> <span id="hero-rating">4.9/5.0</span>
+                        </span>
+                        <span>•</span>
+                        <span class="border border-nexus-border px-2 py-0.5 rounded text-xs bg-nexus-card">AÇÃO / RPG / SCI-FI</span>
+                        <span>•</span>
+                        <span class="text-emerald-400"><i class="fa-solid fa-bolt mr-1"></i> Chave Digital Instantânea</span>
+                    </div>
+
+                    <p id="hero-desc" class="text-nexus-textMuted text-sm sm:text-base mb-6 line-clamp-3 max-w-xl">
+                        Mergulhe em uma megalópole futurista dominada por corporações implacáveis. Modifique seus cibernéticos, explore distritos perigosos e molde seu próprio destino neste RPG épico.
+                    </p>
+
+                    <!-- Price & CTA -->
+                    <div class="flex flex-wrap items-center gap-6">
+                        <div>
+                            <span class="text-xs text-nexus-textMuted block">A partir de</span>
+                            <div class="flex items-baseline gap-2">
+                                <span id="hero-price" class="text-3xl font-extrabold text-white font-gamer">R$ 249,90</span>
+                                <span class="text-sm line-through text-nexus-textMuted">R$ 299,90</span>
+                            </div>
+                        </div>
+
+                        <button id="hero-buy-btn" class="bg-nexus-red hover:bg-nexus-redHover text-white px-8 py-3.5 rounded-lg font-bold font-gamer text-lg tracking-wider transition-all shadow-neon transform hover:-translate-y-0.5 flex items-center gap-3">
+                            <i class="fa-solid fa-bag-shopping"></i>
+                            COMPRAR AGORA
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FLASH SALES SECTION -->
+        <section class="py-8 bg-nexus-dark/60 border-b border-nexus-border">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 bg-nexus-card/80 border border-nexus-border p-4 sm:p-6 rounded-2xl relative overflow-hidden">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-nexus-red/20 border border-nexus-red rounded-xl flex items-center justify-center text-nexus-red text-2xl shadow-neon">
+                            <i class="fa-solid fa-bolt-lightning animate-bounce"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold font-gamer uppercase text-white">Ofertas Relâmpago</h3>
+                            <p class="text-xs text-nexus-textMuted">Descontos de até 80% válidos por tempo limitado!</p>
+                        </div>
+                    </div>
+
+                    <!-- Timer -->
+                    <div class="flex items-center gap-2 font-gamer">
+                        <span class="text-xs uppercase text-nexus-textMuted mr-2">Termina em:</span>
+                        <div class="bg-nexus-black border border-nexus-border px-3 py-1.5 rounded-lg text-center min-w-[50px]">
+                            <span id="timer-hours" class="text-xl font-bold text-nexus-red">08</span>
+                            <span class="block text-[9px] text-nexus-textMuted uppercase">Horas</span>
+                        </div>
+                        <span class="text-nexus-red font-bold text-xl">:</span>
+                        <div class="bg-nexus-black border border-nexus-border px-3 py-1.5 rounded-lg text-center min-w-[50px]">
+                            <span id="timer-minutes" class="text-xl font-bold text-nexus-red">42</span>
+                            <span class="block text-[9px] text-nexus-textMuted uppercase">Min</span>
+                        </div>
+                        <span class="text-nexus-red font-bold text-xl">:</span>
+                        <div class="bg-nexus-black border border-nexus-border px-3 py-1.5 rounded-lg text-center min-w-[50px]">
+                            <span id="timer-seconds" class="text-xl font-bold text-nexus-red">19</span>
+                            <span class="block text-[9px] text-nexus-textMuted uppercase">Seg</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATALOG & FILTERS SECTION -->
+        <section class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <h2 class="text-3xl font-bold font-gamer uppercase tracking-wide text-white flex items-center gap-2">
+                        <span class="w-2 h-6 bg-nexus-red rounded-sm"></span>
+                        Catálogo do Nexus
+                    </h2>
+                    <p class="text-sm text-nexus-textMuted mt-1">Explore os títulos mais vendidos e lançamentos das principais plataformas.</p>
+                </div>
+
+                <!-- Platform Filter Tabs -->
+                <div class="flex flex-wrap gap-2">
+                    <button class="filter-platform-btn active px-4 py-1.5 rounded-full text-xs font-bold uppercase border border-nexus-red bg-nexus-red text-white transition-all" data-platform="all">
+                        Todos
+                    </button>
+                    <button class="filter-platform-btn px-4 py-1.5 rounded-full text-xs font-bold uppercase border border-nexus-border bg-nexus-card text-nexus-textMuted hover:border-nexus-red hover:text-white transition-all" data-platform="PC">
+                        <i class="fa-desktop mr-1"></i> PC
+                    </button>
+                    <button class="filter-platform-btn px-4 py-1.5 rounded-full text-xs font-bold uppercase border border-nexus-border bg-nexus-card text-nexus-textMuted hover:border-nexus-red hover:text-white transition-all" data-platform="PS5">
+                        <i class="fa-brands fa-playstation mr-1"></i> PS5
+                    </button>
+                    <button class="filter-platform-btn px-4 py-1.5 rounded-full text-xs font-bold uppercase border border-nexus-border bg-nexus-card text-nexus-textMuted hover:border-nexus-red hover:text-white transition-all" data-platform="Xbox">
+                        <i class="fa-brands fa-xbox mr-1"></i> Xbox
+                    </button>
+                </div>
+            </div>
+
+            <!-- Genre Category Pills -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 no-scrollbar">
+                <button class="filter-genre-btn active px-4 py-2 rounded-lg bg-nexus-card border border-nexus-border text-sm font-medium whitespace-nowrap text-white hover:border-nexus-red transition-all" data-genre="all">
+                    Todas Categorias
+                </button>
+                <button class="filter-genre-btn px-4 py-2 rounded-lg bg-nexus-card border border-nexus-border text-sm font-medium whitespace-nowrap text-nexus-textMuted hover:border-nexus-red hover:text-white transition-all" data-genre="Ação">
+                    🔥 Ação & Aventura
+                </button>
+                <button class="filter-genre-btn px-4 py-2 rounded-lg bg-nexus-card border border-nexus-border text-sm font-medium whitespace-nowrap text-nexus-textMuted hover:border-nexus-red hover:text-white transition-all" data-genre="RPG">
+                    🗡️ RPG
+                </button>
+                <button class="filter-genre-btn px-4 py-2 rounded-lg bg-nexus-card border border-nexus-border text-sm font-medium whitespace-nowrap text-nexus-textMuted hover:border-nexus-red hover:text-white transition-all" data-genre="FPS">
+                    🎯 Tiro / FPS
+                </button>
+                <button class="filter-genre-btn px-4 py-2 rounded-lg bg-nexus-card border border-nexus-border text-sm font-medium whitespace-nowrap text-nexus-textMuted hover:border-nexus-red hover:text-white transition-all" data-genre="Corrida">
+                    🏎️ Corrida
+                </button>
+                <button class="filter-genre-btn px-4 py-2 rounded-lg bg-nexus-card border border-nexus-border text-sm font-medium whitespace-nowrap text-nexus-textMuted hover:border-nexus-red hover:text-white transition-all" data-genre="Terror">
+                    👻 Terror / Survival
+                </button>
+            </div>
+
+            <!-- GAMES GRID -->
+            <div id="games-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Javascript irá injetar os cards dinamicamente aqui -->
+            </div>
+        </section>
+
+        <!-- WHY CHOOSE US / DIFFERENTIALS -->
+        <section class="py-16 bg-nexus-dark/80 border-t border-b border-nexus-border relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <h2 class="text-3xl font-bold font-gamer uppercase tracking-wide text-white">Por Que Comprar na NEXUS?</h2>
+                    <p class="text-sm text-nexus-textMuted mt-2">Oferecemos a melhor experiência de compra digital com total segurança e suporte dedicado.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="bg-nexus-card p-6 rounded-xl border border-nexus-border hover:border-nexus-red transition-all group hover:-translate-y-1">
+                        <div class="w-12 h-12 bg-nexus-red/10 border border-nexus-red/30 rounded-lg flex items-center justify-center text-nexus-red text-2xl mb-4 group-hover:shadow-neon">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <h3 class="text-lg font-bold font-gamer text-white mb-2">Envio Automático</h3>
+                        <p class="text-xs text-nexus-textMuted leading-relaxed">Sua chave digital é liberada instantaneamente na tela e no seu e-mail logo após a confirmação.</p>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="bg-nexus-card p-6 rounded-xl border border-nexus-border hover:border-nexus-red transition-all group hover:-translate-y-1">
+                        <div class="w-12 h-12 bg-nexus-red/10 border border-nexus-red/30 rounded-lg flex items-center justify-center text-nexus-red text-2xl mb-4 group-hover:shadow-neon">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3 class="text-lg font-bold font-gamer text-white mb-2">Chaves 100% Oficiais</h3>
+                        <p class="text-xs text-nexus-textMuted leading-relaxed">Trabalhamos diretamente com publishers e distribuidoras autorizadas globalmente.</p>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="bg-nexus-card p-6 rounded-xl border border-nexus-border hover:border-nexus-red transition-all group hover:-translate-y-1">
+                        <div class="w-12 h-12 bg-nexus-red/10 border border-nexus-red/30 rounded-lg flex items-center justify-center text-nexus-red text-2xl mb-4 group-hover:shadow-neon">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <h3 class="text-lg font-bold font-gamer text-white mb-2">Suporte 24/7 em PT-BR</h3>
+                        <p class="text-xs text-nexus-textMuted leading-relaxed">Equipe de gamers prontos para ajudar com ativações e dúvidas a qualquer hora.</p>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="bg-nexus-card p-6 rounded-xl border border-nexus-border hover:border-nexus-red transition-all group hover:-translate-y-1">
+                        <div class="w-12 h-12 bg-nexus-red/10 border border-nexus-red/30 rounded-lg flex items-center justify-center text-nexus-red text-2xl mb-4 group-hover:shadow-neon">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </div>
+                        <h3 class="text-lg font-bold font-gamer text-white mb-2">Garantia Reembolso</h3>
+                        <p class="text-xs text-nexus-textMuted leading-relaxed">Garantia total de funcionamento ou seu dinheiro de volta sem burocracia.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <div class="flex justify-center text-yellow-400 gap-1 text-sm mb-2">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <h2 class="text-3xl font-bold font-gamer uppercase tracking-wide text-white">Avaliação dos Gamers</h2>
+                <p class="text-sm text-nexus-textMuted mt-1">Nota 4.9/5 baseada em mais de 12.000 avaliações no Trustpilot</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-nexus-card p-6 rounded-xl border border-nexus-border relative">
+                    <p class="text-xs text-nexus-textMuted italic mb-4">"Comprei a chave do Elden Ring e chegou em menos de 10 segundos. Ativei na Steam sem nenhum problema. Preço insuperável!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-nexus-red/20 border border-nexus-red flex items-center justify-center font-bold text-nexus-red text-xs">
+                            DR
+                        </div>
+                        <div>
+                            <span class="text-sm font-bold text-white block">Diego R.</span>
+                            <span class="text-[10px] text-emerald-400"><i class="fa-solid fa-check-circle mr-1"></i> Comprador Verificado</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-nexus-card p-6 rounded-xl border border-nexus-border relative">
+                    <p class="text-xs text-nexus-textMuted italic mb-4">"Melhor site de jogos do Brasil. Interface super rápida, ofertas de verdade e suporte que me atendeu num domingo à noite!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-nexus-red/20 border border-nexus-red flex items-center justify-center font-bold text-nexus-red text-xs">
+                            ML
+                        </div>
+                        <div>
+                            <span class="text-sm font-bold text-white block">Mariana L.</span>
+                            <span class="text-[10px] text-emerald-400"><i class="fa-solid fa-check-circle mr-1"></i> Comprador Verificado</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-nexus-card p-6 rounded-xl border border-nexus-border relative">
+                    <p class="text-xs text-nexus-textMuted italic mb-4">"Preços muito melhores que direto nas lojas oficiais do console. Já é a minha quarta compra de pré-venda na Nexus."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-nexus-red/20 border border-nexus-red flex items-center justify-center font-bold text-nexus-red text-xs">
+                            GV
+                        </div>
+                        <div>
+                            <span class="text-sm font-bold text-white block">Gabriel V.</span>
+                            <span class="text-[10px] text-emerald-400"><i class="fa-solid fa-check-circle mr-1"></i> Comprador Verificado</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- CART SLIDE-OVER MODAL -->
+    <div id="cart-modal" class="fixed inset-0 z-50 hidden transition-opacity duration-300">
+        <!-- Backdrop -->
+        <div id="cart-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm"></div>
+
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-nexus-dark border-l border-nexus-border flex flex-col shadow-2xl">
+                
+                <!-- Header -->
+                <div class="p-6 border-b border-nexus-border flex items-center justify-between">
+                    <h2 class="text-xl font-bold font-gamer uppercase text-white flex items-center gap-2">
+                        <i class="fa-solid fa-cart-shopping text-nexus-red"></i> Seu Carrinho
+                    </h2>
+                    <button id="cart-close-btn" class="text-nexus-textMuted hover:text-white p-2">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Cart Items List -->
+                <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4">
+                    <!-- Items rendered dynamically via JS -->
+                </div>
+
+                <!-- Cart Footer -->
+                <div class="p-6 border-t border-nexus-border bg-nexus-black/50 space-y-4">
+                    <!-- Coupon Input -->
+                    <div class="flex gap-2">
+                        <input type="text" id="coupon-input" placeholder="Cupom (ex: NEXUS10)" class="bg-nexus-card border border-nexus-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-nexus-red flex-1 uppercase">
+                        <button id="apply-coupon-btn" class="bg-nexus-border hover:bg-nexus-red text-white text-xs font-bold px-4 py-2 rounded-lg transition-all">APLICAR</button>
+                    </div>
+
+                    <!-- Totals -->
+                    <div class="space-y-1 text-sm">
+                        <div class="flex justify-between text-nexus-textMuted">
+                            <span>Subtotal</span>
+                            <span id="cart-subtotal">R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between text-emerald-400 hidden" id="discount-row">
+                            <span>Desconto Cupom</span>
+                            <span id="cart-discount">-R$ 0,00</span>
+                        </div>
+                        <div class="flex justify-between font-bold text-lg text-white pt-2 border-t border-nexus-border">
+                            <span>Total</span>
+                            <span id="cart-total" class="text-nexus-red font-gamer text-2xl">R$ 0,00</span>
+                        </div>
+                    </div>
+
+                    <button id="checkout-btn" class="w-full bg-nexus-red hover:bg-nexus-redHover text-white py-3.5 rounded-lg font-bold font-gamer text-lg tracking-wider transition-all shadow-neon flex items-center justify-center gap-2">
+                        FINALIZAR COMPRA <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GAME DETAILS MODAL -->
+    <div id="game-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+        <!-- Backdrop -->
+        <div id="modal-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm"></div>
+
+        <div class="bg-nexus-card border border-nexus-border rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto z-10 relative shadow-neon">
+            <button id="modal-close-btn" class="absolute top-4 right-4 z-20 bg-nexus-black/60 text-nexus-textMuted hover:text-white w-9 h-9 rounded-full flex items-center justify-center border border-nexus-border transition-all">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div id="modal-content">
+                <!-- Javascript Injects Details -->
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-nexus-black border-t border-nexus-border text-nexus-textMuted pt-12 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-nexus-border">
+                
+                <!-- Col 1: Brand -->
+                <div class="space-y-4">
+                    <a href="#" class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-nexus-red rounded flex items-center justify-center text-white font-bold">
+                            <i class="fa-solid fa-gamepad"></i>
+                        </div>
+                        <span class="text-xl font-bold font-gamer text-white">NEXUS<span class="text-nexus-red">.STORE</span></span>
+                    </a>
+                    <p class="text-xs leading-relaxed">Sua plataforma definitiva para os melhores jogos de PC e Consoles com ativação instantânea e o melhor preço do mercado.</p>
+                    <div class="flex gap-3 text-lg">
+                        <a href="#" class="w-8 h-8 rounded bg-nexus-card flex items-center justify-center hover:text-nexus-red hover:border hover:border-nexus-red transition-all"><i class="fa-brands fa-discord"></i></a>
+                        <a href="#" class="w-8 h-8 rounded bg-nexus-card flex items-center justify-center hover:text-nexus-red hover:border hover:border-nexus-red transition-all"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-8 h-8 rounded bg-nexus-card flex items-center justify-center hover:text-nexus-red hover:border hover:border-nexus-red transition-all"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="#" class="w-8 h-8 rounded bg-nexus-card flex items-center justify-center hover:text-nexus-red hover:border hover:border-nexus-red transition-all"><i class="fa-brands fa-twitch"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Navigation -->
+                <div>
+                    <h4 class="text-white font-bold font-gamer uppercase tracking-wider mb-4">Navegação</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#" class="hover:text-nexus-red transition-colors">Lançamentos</a></li>
+                        <li><a href="#" class="hover:text-nexus-red transition-colors">Pré-Vendas</a></li>
+                        <li><a href="#" class="hover:text-nexus-red transition-colors">Ofertas Relâmpago</a></li>
+                        <li><a href="#" class="hover:text-nexus-red transition-colors">Jogos PC (Steam/Epic)</a></li>
+                        <li><a href="#" class="hover:text-nexus-red transition-colors">PlayStation 5 / Xbox</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Support -->
+                <div>
+                    <h4 class="text-white font-bold font-gamer uppercase tracking-wider mb-4">Atendimento</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#" class="hover:text-nexus-red transition-colors">Central de Ajuda</a></li>
+                        <li><a href="#" class="hover:text-nexus-red transition-colors">Como Ativar Chaves</a></li>
+                        <li><a href="#" class="hover:text-nexus-red transition-colors">Política de Reembolso</a></li>
+                        <li><a href="#" class="hover:text-nexus-red transition-colors">Termos de Serviço</a></li>
+                        <li><a href="#" class="hover:text-nexus-red transition-colors">Contato / Suporte</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Newsletter -->
+                <div>
+                    <h4 class="text-white font-bold font-gamer uppercase tracking-wider mb-4">VIP Gamer Newsletter</h4>
+                    <p class="text-xs mb-3">Receba cupons exclusivos e alertas de cupons secretos no seu e-mail.</p>
+                    <form onsubmit="event.preventDefault(); alert('Inscrição realizada com sucesso!');" class="space-y-2">
+                        <input type="email" placeholder="Seu e-mail gamer..." class="w-full bg-nexus-card border border-nexus-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-nexus-red">
+                        <button type="submit" class="w-full bg-nexus-red hover:bg-nexus-redHover text-white py-2 rounded-lg font-bold font-gamer text-xs uppercase tracking-wider transition-all">Inscrever-se</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Bottom Badges -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+                <p>&copy; 2026 NEXUS GAME STORE - Todos os direitos reservados.</p>
+                <div class="flex items-center gap-4 text-xl text-nexus-textMuted">
+                    <i class="fa-brands fa-cc-visa" title="Visa"></i>
+                    <i class="fa-brands fa-cc-mastercard" title="Mastercard"></i>
+                    <i class="fa-solid fa-barcode" title="Boleto"></i>
+                    <i class="fa-solid fa-pix" title="Pix"></i>
+                    <i class="fa-solid fa-lock text-nexus-red text-sm" title="SSL Seguro"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT APP CODE -->
+    <script>
+        // Database de Jogos Fictícios
+        const GAMES_DATABASE = [
+            {
+                id: 'game-1',
+                title: 'Cyber Protocol 2088',
+                genre: 'RPG',
+                platform: ['PC', 'PS5', 'Xbox'],
+                priceOriginal: 299.90,
+                priceDiscount: 249.90,
+                rating: 4.9,
+                discountPercent: 16,
+                image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80',
+                synopsis: 'Explore uma metrópole ciberpunk cheia de conspirações corporativas e ação implacável.',
+                specs: 'GPU: RTX 3060 / RAM: 16GB / Espaço: 70GB SSD'
+            },
+            {
+                id: 'game-2',
+                title: 'Elden Shadows: Awakening',
+                genre: 'RPG',
+                platform: ['PC', 'PS5'],
+                priceOriginal: 349.90,
+                priceDiscount: 199.90,
+                rating: 5.0,
+                discountPercent: 42,
+                image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80',
+                synopsis: 'Derrote deuses corrompidos e domine artes sombrias neste desafiador RPG de ação souls-like.',
+                specs: 'GPU: GTX 1070 / RAM: 12GB / Espaço: 60GB SSD'
+            },
+            {
+                id: 'game-3',
+                title: 'Velocity Horizon 5',
+                genre: 'Corrida',
+                platform: ['PC', 'Xbox'],
+                priceOriginal: 249.90,
+                priceDiscount: 124.95,
+                rating: 4.7,
+                discountPercent: 50,
+                image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80',
+                synopsis: 'Acelere em pistas impressionantes com física ultra-realista e centenas de superesportivos personalizáveis.',
+                specs: 'GPU: RTX 2060 / RAM: 16GB / Espaço: 110GB'
+            },
+            {
+                id: 'game-4',
+                title: 'Vanguard: Black Ops',
+                genre: 'FPS',
+                platform: ['PC', 'PS5', 'Xbox'],
+                priceOriginal: 299.90,
+                priceDiscount: 209.90,
+                rating: 4.5,
+                discountPercent: 30,
+                image: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80',
+                synopsis: 'Combate tático moderno de alta intensidade, multiplayer competitivo e modo zumbis cooperativo.',
+                specs: 'GPU: RTX 3070 / RAM: 16GB / Espaço: 120GB SSD'
+            },
+            {
+                id: 'game-5',
+                title: 'Mythology: Ragnarok',
+                genre: 'Ação',
+                platform: ['PS5'],
+                priceOriginal: 349.90,
+                priceDiscount: 279.90,
+                rating: 4.9,
+                discountPercent: 20,
+                image: 'https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=600&q=80',
+                synopsis: 'Uma jornada épica através dos nove reinos nórdicos enquanto forças mitológicas se enfrentam.',
+                specs: 'Exclusivo Console PlayStation 5'
+            },
+            {
+                id: 'game-6',
+                title: 'BioHazard: Isolation',
+                genre: 'Terror',
+                platform: ['PC', 'PS5', 'Xbox'],
+                priceOriginal: 199.90,
+                priceDiscount: 79.90,
+                rating: 4.8,
+                discountPercent: 60,
+                image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80',
+                synopsis: 'Sobreviva a pesadelos biológicos em uma estação de pesquisas abandonada nas profundezas.',
+                specs: 'GPU: GTX 1060 / RAM: 8GB / Espaço: 45GB'
+            },
+            {
+                id: 'game-7',
+                title: 'Space Odyssey: Infinite',
+                genre: 'RPG',
+                platform: ['PC', 'Xbox'],
+                priceOriginal: 299.90,
+                priceDiscount: 179.90,
+                rating: 4.6,
+                discountPercent: 40,
+                image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80',
+                synopsis: 'Construa sua nave, explore milhares de planetas virgens e lidere sua própria frota estelar.',
+                specs: 'GPU: RTX 2070 / RAM: 16GB / Espaço: 90GB SSD'
+            },
+            {
+                id: 'game-8',
+                title: 'Urban Legends: Street Brawl',
+                genre: 'Ação',
+                platform: ['PC', 'PS5', 'Xbox'],
+                priceOriginal: 180.00,
+                priceDiscount: 89.90,
+                rating: 4.4,
+                discountPercent: 50,
+                image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80',
+                synopsis: 'Luta urbana em ritmo acelerado com combos devastadores e partidas multiplayer online.',
+                specs: 'GPU: GTX 970 / RAM: 8GB / Espaço: 30GB'
+            }
+        ];
+
+        // Estado da Aplicação
+        let cart = [];
+        let wishlist = [];
+        let currentPlatform = 'all';
+        let currentGenre = 'all';
+        let searchQuery = '';
+        let discountMultiplier = 1.0; // Padrão sem cupom
+
+        // DOM Elements
+        const gamesGrid = document.getElementById('games-grid');
+        const cartBadge = document.getElementById('cart-badge');
+        const wishlistBadge = document.getElementById('wishlist-badge');
+        const cartModal = document.getElementById('cart-modal');
+        const cartItemsContainer = document.getElementById('cart-items-container');
+        const cartSubtotalEl = document.getElementById('cart-subtotal');
+        const cartDiscountEl = document.getElementById('cart-discount');
+        const cartTotalEl = document.getElementById('cart-total');
+        const discountRow = document.getElementById('discount-row');
+        const gameModal = document.getElementById('game-modal');
+        const modalContent = document.getElementById('modal-content');
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            renderGames();
+            startTimer();
+            setupEventListeners();
+        });
+
+        function renderGames() {
+            gamesGrid.innerHTML = '';
+
+            const filteredGames = GAMES_DATABASE.filter(game => {
+                const matchesPlatform = currentPlatform === 'all' || game.platform.includes(currentPlatform);
+                const matchesGenre = currentGenre === 'all' || game.genre === currentGenre;
+                const matchesSearch = game.title.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesPlatform && matchesGenre && matchesSearch;
+            });
+
+            if (filteredGames.length === 0) {
+                gamesGrid.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-nexus-textMuted">
+                        <i class="fa-solid fa-ghost text-4xl mb-3 text-nexus-red opacity-50"></i>
+                        <p class="text-base font-gamer">Nenhum jogo encontrado com estes filtros.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filteredGames.forEach(game => {
+                const isWishlisted = wishlist.includes(game.id);
+                
+                const card = document.createElement('div');
+                card.className = 'bg-nexus-card border border-nexus-border rounded-xl overflow-hidden hover:border-nexus-red transition-all duration-300 flex flex-col group hover:shadow-neon';
+                
+                card.innerHTML = `
+                    <!-- Thumbnail Container -->
+                    <div class="relative h-48 overflow-hidden cursor-pointer" onclick="openGameModal('${game.id}')">
+                        <img src="${game.image}" alt="${game.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-nexus-card via-transparent to-transparent"></div>
+                        
+                        <!-- Discount Tag -->
+                        <span class="absolute top-3 left-3 bg-nexus-red text-white font-bold text-xs px-2 py-1 rounded shadow-md font-gamer">
+                            -${game.discountPercent}%
+                        </span>
+
+                        <!-- Favorite Button -->
+                        <button onclick="event.stopPropagation(); toggleWishlist('${game.id}')" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-nexus-black/60 border border-nexus-border flex items-center justify-center text-white hover:text-nexus-red hover:border-nexus-red transition-all">
+                            <i class="${isWishlisted ? 'fa-solid text-nexus-red' : 'fa-regular'} fa-heart"></i>
+                        </button>
+
+                        <!-- Rating Badge -->
+                        <div class="absolute bottom-2 left-3 flex items-center gap-1 text-xs text-yellow-400 font-bold bg-nexus-black/80 px-2 py-0.5 rounded border border-nexus-border">
+                            <i class="fa-solid fa-star"></i> ${game.rating.toFixed(1)}
+                        </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-1 mb-1">
+                                ${game.platform.map(p => `<span class="text-[10px] font-bold text-nexus-textMuted bg-nexus-black px-1.5 py-0.5 rounded border border-nexus-border">${p}</span>`).join('')}
+                            </div>
+                            <h3 onclick="openGameModal('${game.id}')" class="font-bold text-base text-white group-hover:text-nexus-red transition-colors cursor-pointer line-clamp-1">${game.title}</h3>
+                            <p class="text-xs text-nexus-textMuted mt-1">${game.genre}</p>
+                        </div>
+
+                        <!-- Price and Add Button -->
+                        <div class="mt-4 pt-3 border-t border-nexus-border flex items-center justify-between">
+                            <div>
+                                <span class="text-[11px] text-nexus-textMuted line-through block">R$ ${game.priceOriginal.toFixed(2)}</span>
+                                <span class="text-lg font-bold font-gamer text-white">R$ ${game.priceDiscount.toFixed(2)}</span>
+                            </div>
+
+                            <button onclick="addToCart('${game.id}')" class="bg-nexus-red/10 border border-nexus-red text-nexus-red hover:bg-nexus-red hover:text-white w-10 h-10 rounded-lg flex items-center justify-center transition-all shadow-sm">
+                                <i class="fa-solid fa-cart-plus text-base"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                gamesGrid.appendChild(card);
+            });
+        }
+
+        function addToCart(gameId) {
+            const existingIndex = cart.findIndex(item => item.id === gameId);
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += 1;
+            } else {
+                const game = GAMES_DATABASE.find(g => g.id === gameId);
+                cart.push({ ...game, quantity: 1 });
+            }
+            updateCartUI();
+            openCartModal();
+        }
+
+        function removeFromCart(gameId) {
+            cart = cart.filter(item => item.id !== gameId);
+            updateCartUI();
+        }
+
+        function updateQuantity(gameId, delta) {
+            const item = cart.find(i => i.id === gameId);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    removeFromCart(gameId);
+                } else {
+                    updateCartUI();
+                }
+            }
+        }
+
+        function updateCartUI() {
+            // Count items
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartBadge.innerText = totalCount;
+
+            // Render List
+            cartItemsContainer.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="text-center py-12 text-nexus-textMuted">
+                        <i class="fa-solid fa-cart-flatbed text-4xl mb-3 text-nexus-border"></i>
+                        <p class="text-sm">Seu carrinho está vazio.</p>
+                    </div>
+                `;
+            } else {
+                cart.forEach(item => {
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'flex items-center gap-3 bg-nexus-card p-3 rounded-lg border border-nexus-border';
+                    itemEl.innerHTML = `
+                        <img src="${item.image}" class="w-16 h-16 object-cover rounded border border-nexus-border">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-sm font-bold text-white truncate">${item.title}</h4>
+                            <span class="text-xs text-nexus-red font-gamer font-bold">R$ ${item.priceDiscount.toFixed(2)}</span>
+                            <div class="flex items-center gap-2 mt-1">
+                                <button onclick="updateQuantity('${item.id}', -1)" class="w-5 h-5 bg-nexus-black border border-nexus-border rounded text-xs flex items-center justify-center text-white hover:border-nexus-red">-</button>
+                                <span class="text-xs text-white font-bold">${item.quantity}</span>
+                                <button onclick="updateQuantity('${item.id}', 1)" class="w-5 h-5 bg-nexus-black border border-nexus-border rounded text-xs flex items-center justify-center text-white hover:border-nexus-red">+</button>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart('${item.id}')" class="text-nexus-textMuted hover:text-nexus-red p-1">
+                            <i class="fa-solid fa-trash-can text-sm"></i>
+                        </button>
+                    `;
+                    cartItemsContainer.appendChild(itemEl);
+                });
+            }
+
+            // Calculations
+            const subtotal = cart.reduce((sum, item) => sum + (item.priceDiscount * item.quantity), 0);
+            const total = subtotal * discountMultiplier;
+            const discountAmount = subtotal - total;
+
+            cartSubtotalEl.innerText = `R$ ${subtotal.toFixed(2)}`;
+            cartTotalEl.innerText = `R$ ${total.toFixed(2)}`;
+
+            if (discountMultiplier < 1.0) {
+                discountRow.classList.remove('hidden');
+                cartDiscountEl.innerText = `-R$ ${discountAmount.toFixed(2)}`;
+            } else {
+                discountRow.classList.add('hidden');
+            }
+        }
+
+        // Favoritos / Wishlist
+        function toggleWishlist(gameId) {
+            if (wishlist.includes(gameId)) {
+                wishlist = wishlist.filter(id => id !== gameId);
+            } else {
+                wishlist.push(gameId);
+            }
+            
+            wishlistBadge.innerText = wishlist.length;
+            if (wishlist.length > 0) {
+                wishlistBadge.classList.remove('hidden');
+            } else {
+                wishlistBadge.classList.add('hidden');
+            }
+
+            renderGames();
+        }
+
+        function openGameModal(gameId) {
+            const game = GAMES_DATABASE.find(g => g.id === gameId);
+            if (!game) return;
+
+            modalContent.innerHTML = `
+                <div class="relative h-64 sm:h-80 overflow-hidden rounded-t-2xl">
+                    <img src="${game.image}" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-nexus-card via-nexus-card/40 to-transparent"></div>
+                </div>
+                <div class="p-6 -mt-12 relative z-10">
+                    <span class="bg-nexus-red text-white font-bold text-xs px-2.5 py-1 rounded shadow-md font-gamer">
+                        ${game.genre}
+                    </span>
+                    <h2 class="text-3xl font-bold font-gamer text-white mt-2 mb-1">${game.title}</h2>
+                    <div class="flex items-center gap-3 text-xs text-nexus-textMuted mb-4">
+                        <span class="text-yellow-400 font-bold"><i class="fa-solid fa-star"></i> ${game.rating}</span>
+                        <span>•</span>
+                        <span>Plataformas: ${game.platform.join(', ')}</span>
+                    </div>
+
+                    <p class="text-nexus-textMuted text-sm mb-6 leading-relaxed">${game.synopsis}</p>
+
+                    <div class="bg-nexus-black/60 border border-nexus-border p-4 rounded-xl mb-6">
+                        <h4 class="text-xs font-bold font-gamer uppercase text-white mb-1"><i class="fa-solid fa-microchip text-nexus-red mr-1"></i> Requisitos Estimados</h4>
+                        <p class="text-xs text-nexus-textMuted">${game.specs}</p>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-4 border-t border-nexus-border">
+                        <div>
+                            <span class="text-xs text-nexus-textMuted block">Preço Promocional</span>
+                            <span class="text-2xl font-bold font-gamer text-white">R$ ${game.priceDiscount.toFixed(2)}</span>
+                        </div>
+                        <button onclick="addToCart('${game.id}'); closeGameModal();" class="bg-nexus-red hover:bg-nexus-redHover text-white px-6 py-3 rounded-lg font-bold font-gamer text-base tracking-wider transition-all shadow-neon flex items-center gap-2">
+                            <i class="fa-solid fa-cart-shopping"></i> ADICIONAR AO CARRINHO
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            gameModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeGameModal() {
+            gameModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function openCartModal() {
+            cartModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCartModal() {
+            cartModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Timer de Ofertas Relâmpago
+        function startTimer() {
+            let hours = 8, minutes = 42, seconds = 19;
+            const hEl = document.getElementById('timer-hours');
+            const mEl = document.getElementById('timer-minutes');
+            const sEl = document.getElementById('timer-seconds');
+
+            setInterval(() => {
+                if (seconds > 0) {
+                    seconds--;
+                } else {
+                    seconds = 59;
+                    if (minutes > 0) {
+                        minutes--;
+                    } else {
+                        minutes = 59;
+                        if (hours > 0) hours--;
+                    }
+                }
+
+                hEl.innerText = hours.toString().padStart(2, '0');
+                mEl.innerText = minutes.toString().padStart(2, '0');
+                sEl.innerText = seconds.toString().padStart(2, '0');
+            }, 1000);
+        }
+
+        // Event Listeners
+        function setupEventListeners() {
+            // Cart Triggers
+            document.getElementById('btn-cart-toggle').addEventListener('click', openCartModal);
+            document.getElementById('cart-close-btn').addEventListener('click', closeCartModal);
+            document.getElementById('cart-backdrop').addEventListener('click', closeCartModal);
+            
+            // Modal Triggers
+            document.getElementById('modal-close-btn').addEventListener('click', closeGameModal);
+            document.getElementById('modal-backdrop').addEventListener('click', closeGameModal);
+
+            // Filter Platforms
+            document.querySelectorAll('.filter-platform-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.filter-platform-btn').forEach(b => {
+                        b.classList.remove('active', 'bg-nexus-red', 'text-white');
+                        b.classList.add('bg-nexus-card', 'text-nexus-textMuted');
+                    });
+                    e.currentTarget.classList.add('active', 'bg-nexus-red', 'text-white');
+                    currentPlatform = e.currentTarget.dataset.platform;
+                    renderGames();
+                });
+            });
+
+            // Filter Genres
+            document.querySelectorAll('.filter-genre-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.filter-genre-btn').forEach(b => {
+                        b.classList.remove('active', 'text-white', 'border-nexus-red');
+                        b.classList.add('text-nexus-textMuted');
+                    });
+                    e.currentTarget.classList.add('active', 'text-white', 'border-nexus-red');
+                    currentGenre = e.currentTarget.dataset.genre;
+                    renderGames();
+                });
+            });
+
+            // Search Filter
+            const searchInput = document.getElementById('search-input');
+            const mobileSearchInput = document.getElementById('mobile-search-input');
+
+            const handleSearch = (e) => {
+                searchQuery = e.target.value;
+                renderGames();
+            };
+
+            searchInput.addEventListener('input', handleSearch);
+            mobileSearchInput.addEventListener('input', handleSearch);
+
+            // Cupom de Desconto
+            document.getElementById('apply-coupon-btn').addEventListener('click', () => {
+                const couponInput = document.getElementById('coupon-input').value.trim().toUpperCase();
+                if (couponInput === 'NEXUS10') {
+                    discountMultiplier = 0.90; // 10% OFF
+                    updateCartUI();
+                    alert('Cupom NEXUS10 aplicado! 10% de desconto concedido.');
+                } else if (couponInput === 'GAMER20') {
+                    discountMultiplier = 0.80; // 20% OFF
+                    updateCartUI();
+                    alert('Cupom GAMER20 aplicado! 20% de desconto concedido.');
+                } else {
+                    alert('Cupom inválido. Tente NEXUS10 ou GAMER20.');
